@@ -1,0 +1,3 @@
+Copy this link and set it in any browser to use the dashboard
+
+https://coachproject1-qqso4mp6ebdhp2e8dthtyf.streamlit.app/

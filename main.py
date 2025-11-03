@@ -89,12 +89,11 @@ st.markdown("""
 <header>
   <h1>📈 AI Revenue Predictor Dashboard</h1>
   <p style='text-align:center; color:var(--subtext-color); font-size:16px;'>
-    Powered by Machine Learning | Designed by <b>Mohamed Hassan</b>
+            <br> Produced <b>for HandyHome Company</b>
   </p>
 </header>
 """, unsafe_allow_html=True)
 
-# --- Loading Model, Scaler, and the NEW Poly Transformer ---
 model = joblib.load('model_project.pkl')
 scaler = joblib.load('scaler_project.pkl')
 feature_names = joblib.load('features_project.pkl') 
@@ -133,7 +132,7 @@ Month_Number = date.month
 Year_Number = date.year
 DayOfWeek_number = date.weekday()
 
-# -------------------------------------------------------------
+
 try:
     mean_revenue = re_use_resources().mean()
     Ad_to_Revenue_Ratio = Ad_Spend / (mean_revenue + 1)
@@ -150,11 +149,9 @@ try:
 except Exception:
     LAST_KNOWN_REVENUE = Ad_Spend
    
-# -------------------------------------------------------------
    
 
 if st.button("🔥 Predict Daily Revenue", type='primary' , use_container_width = True):
-    # --- Step 1: Prepare raw input (14 features) ---
     raw_input_data = pd.DataFrame({
         'Time of Day': [encode['time_of_day'][time_of_day]],
         'Category': [encode['category'][category]],
@@ -181,24 +178,24 @@ if st.button("🔥 Predict Daily Revenue", type='primary' , use_container_width 
         st.error(f"❌ Error during feature preparation: {str(e)}")
         st.stop()
 
-    # --- Step 3: Scale and predict ---
     try:
         input_scaled = scaler.transform(input_poly)
         prediction = model.predict(input_scaled)
         pred_value = round(float(prediction[0]), 2)
        
-        # -------------------------------------------------------------
 
         change_value = pred_value - LAST_KNOWN_REVENUE
        
          
         if change_value >= 0:
-             change_symbol = "▲" # صعود
+             change_symbol = "▲" # Gain - as the the daily revenue of that day is greater than the daily revenue of day before
              change_color = "text-green-500"
+             color = 'green'
         else:
-             change_symbol = "▼" # هبوط
+             change_symbol = "▼" # Loss - as the the daily revenue of that day is less than the daily revenue of day before
              change_color = "text-red-500"
-        # -------------------------------------------------------------
+             color = 'red'
+
 
         st.success(f"📈 **Predicted Daily Revenue:** `{pred_value} $`", icon="✅")
 
@@ -211,7 +208,7 @@ if st.button("🔥 Predict Daily Revenue", type='primary' , use_container_width 
         c3.markdown(f"""
             <div class='metric-card'>
                 <h3>Change Δ</h3>
-                <p class='{change_color}'>{change_symbol} {abs(change_value):.3f} $</p>
+                <p class='{change_color}' style = 'color:{color}'>{change_symbol} {abs(change_value):.3f} $</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -220,4 +217,4 @@ if st.button("🔥 Predict Daily Revenue", type='primary' , use_container_width 
         st.info("Make sure all necessary files are correctly generated and the `used_Mehods.py` functions work.")
 
 st.divider()
-st.caption("✅ Built by Mohamed Hassan – Machine Learning Engineer")
+st.caption("CopyRights © Reserved for HandyHome.")

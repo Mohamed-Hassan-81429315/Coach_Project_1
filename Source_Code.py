@@ -80,6 +80,15 @@ for c in cols :
     print(f'{c} -> {data[c].unique()}')
 
 
+# Figure 3: User distribution by service category (Category) and access platforms (Platform).
+plt.figure(figsize = (12 , 12))
+sns.countplot(data=data ,  x='Category' , hue = 'Platform'  , color='blue')
+plt.xlabel('Category')
+plt.ylabel('Platform')
+plt.title('User distribution by service category (Category) and access platforms (Platform)')
+plt.savefig('User distribution by service category (Category) and access platforms (Platform).png')
+plt.show()
+
 data['Time of Day'] = data['Time of Day'].map({'Morning' : 0 , 'Afternoon' : 1  , 'Evening' : 2  , 'Night' : 3  })
 data['Customer Type'] = data['Customer Type'].map({'New' : 0  , 'Returning' : 1})
 data['Platform'] = data['Platform'].map({'Instagram' : 0 , 'In-store' : 1 , 'Email' : 2 , 'Google' : 3})
@@ -131,6 +140,8 @@ plt.title('RelationShip Between the Target \' Daily Revenue \' and the other Col
 plt.savefig('Correlation_Between_The target_and_the_other_columns.png' , dpi = 300)
 plt.show()
 
+
+
 data.describe()
 
 data.dropna(inplace=True)
@@ -144,15 +155,11 @@ raw_feature_names = x.columns.tolist()
 joblib.dump(raw_feature_names, 'features_project.pkl')
 print('Raw Feature Names (14 features) saved successfully ....')
 
-# 2. Define and Fit Polynomial Features
 poly = PolynomialFeatures(degree=2)
 x = poly.fit_transform(x)
 
-# 3. Save the Polynomial Transformer
-joblib.dump(poly, 'poly_transformer.pkl')
-print('PolynomialFeatures Transformer saved successfully ....')
-# -------------------------------------------------------------
 
+ 
 x_train , x_test  , y_train , y_test = train_test_split(x , y , test_size = 0.2 , random_state = 42 )
 scaler = StandardScaler() 
 
@@ -178,10 +185,7 @@ plt.title(' Polynomianl Regression Results ')
 plt.show()
 
 joblib.dump(model ,"model_project.pkl")
-print('Model saved sucessfully ....')
 
 joblib.dump(scaler , 'scaler_project.pkl')
-print('scaler saved sucessfully ....')
 
-
-print(data.drop(columns = ['Daily Revenue']).columns)
+joblib.dump(poly, 'poly_transformer.pkl')
