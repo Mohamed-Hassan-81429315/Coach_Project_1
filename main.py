@@ -89,7 +89,7 @@ st.markdown("""
 <header>
   <h1>📈 AI Revenue Predictor Dashboard</h1>
   <p style='text-align:center; color:var(--subtext-color); font-size:16px;'>
-            <br> Produced <b>for HandyHome Company</b>
+            <br> Produced By <b>M.H.A</b>
   </p>
 </header>
 """, unsafe_allow_html=True)
@@ -217,4 +217,4 @@ if st.button("🔥 Predict Daily Revenue", type='primary' , use_container_width 
         st.info("Make sure all necessary files are correctly generated and the `used_Mehods.py` functions work.")
 
 st.divider()
-st.caption("CopyRights © Reserved for HandyHome.")
+st.caption("CopyRights © Reserved for M.H.A")
